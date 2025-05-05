@@ -1,7 +1,8 @@
 # Helio Signup Helper
 
-This template should help get you started developing with Svelte in WXT.
+A tool to signup for the free (Johnny) Plan for [Helio Hosting](https://heliohost.org/signup/), a Hosting Service Provider
 
-## Recommended IDE Setup
+## TODO
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- [ ] check OS time with Internet Time and Suggested the user to Sync the OS Time if needed
+- [ ] Auto Send Click events to the Johnny Plan button on the exact Millisecond
