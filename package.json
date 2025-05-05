@@ -1,0 +1,38 @@
+{
+  "name": "helio_hopst_signup_bot",
+  "description": "a bot to click the signup button for free accroun on helio host",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "postinstall": "wxt prepare"
+  },
+  "devDependencies": {
+    "@iconify-json/line-md": "^1.2.7",
+    "@iconify-json/tabler": "^1.2.17",
+    "@tsconfig/svelte": "^5.0.4",
+    "@unocss/preset-icons": "^66.1.0",
+    "@unocss/preset-mini": "^66.1.0",
+    "@unocss/reset": "^66.1.0",
+    "@unocss/transformer-variant-group": "^66.1.0",
+    "@wxt-dev/module-svelte": "^2.0.3",
+    "@wxt-dev/unocss": "^1.0.1",
+    "svelte": "^5.28.2",
+    "svelte-check": "^4.1.6",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3",
+    "unocss": "^66.1.0",
+    "wxt": "^0.20.6"
+  },
+  "dependencies": {
+    "@ameinhardt/unocss-preset-daisy": "^1.1.7",
+    "daisyui": "^5.0.35"
+  }
+}
