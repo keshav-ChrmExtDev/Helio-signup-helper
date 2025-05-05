@@ -3,6 +3,14 @@
   import type { Submit_button_states } from "@/types";
 
   let response: string | undefined = $state();
+  let time_diffrence: number | undefined = $state();
+
+  browser.runtime.onMessage.addListener((message) => {
+    if (message.type === "setDifference") {
+      time_diffrence = message.diffMs;
+    }
+  });
+
   async function start_clicking() {
     submit_state = "waiting";
     try {
@@ -29,6 +37,7 @@
   }
 
   let submit_state: Submit_button_states = $state("idle");
+  $inspect(time_diffrence);
 </script>
 
 <main class="flex flex-col p-4">
@@ -37,6 +46,20 @@
     <p class="text-center">Helps you SIgnup for the Free (Johny) Plan</p>
   </div>
   <div class="divider"></div>
+  <div class="flex items-center gap-3">
+    <div class="i-tabler:clock-hour-4-filled size-6"></div>
+    <p class="text-xl">Time Diffrence</p>
+  </div>
+  <div class="flex flex-col items-center mx-auto">
+    <span class="countdown font-mono text-5xl">
+      <span
+        style="--value:{Math.abs(time_diffrence || 0) % 100};"
+        aria-live="polite"
+        aria-label="59">59</span
+      >
+    </span>
+    ms
+  </div>
   <SubmitButton
     onclick={start_clicking}
     state={submit_state}
