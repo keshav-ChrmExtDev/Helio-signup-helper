@@ -3,7 +3,7 @@
   import type { Submit_button_states } from "@/types";
 
   let response: string | undefined = $state();
-  async function start_pinging() {
+  async function start_clicking() {
     submit_state = "waiting";
     try {
       while (true) {
@@ -12,11 +12,18 @@
         );
         if (res.url.includes("?error=full")) {
           response = "Signups Not Open Yet";
+        } else {
+          submit_state = "success";
+          response = "Something Else Happened" + res.url;
+          console.log(res.url);
+          break;
         }
-        submit_state = "success";
       }
     } catch (e) {
       submit_state = "error";
+      if (e instanceof Error) {
+        response = e.message;
+      }
       console.error("Nothing Happened");
     }
   }
@@ -31,15 +38,16 @@
   </div>
   <div class="divider"></div>
   <SubmitButton
-    onclick={start_pinging}
+    onclick={start_clicking}
     state={submit_state}
     label_icon="i-tabler:cloud-question"
   >
-    Ping Now!
+    Start Checking
   </SubmitButton>
+  <p>Click this button when the Signup Portal is about to open.</p>
   {#if response}
     <div role="alert" class="alert alert-info alert-soft">
-      <span>{response}</span>
+      <span class="truncate">{response}</span>
     </div>
   {/if}
 </main>
