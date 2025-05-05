@@ -1,6 +1,8 @@
 export default defineContentScript({
-  matches: ["*://*.google.com/*"],
-  main() {
-    console.log("Hello content.");
+  matches: ["https://heliohost.org/signup/*"],
+  main(ctx) {
+    const countdown = document.querySelector("#countdown_johnny");
+    if (!countdown) return;
+    const aElemet = countdown.closest("a");
   },
 });
