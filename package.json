@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.7",
+    "@number-flow/svelte": "^0.3.7",
     "daisyui": "^5.0.35"
   }
 }
