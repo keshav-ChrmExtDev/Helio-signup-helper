@@ -47,14 +47,7 @@
     <p class="text-center">Helps you SIgnup for the Free (Johny) Plan</p>
   </div>
   <div class="divider"></div>
-  <SubmitButton
-    onclick={start_clicking}
-    state={submit_state}
-    label_icon="i-tabler:cloud-question"
-  >
-    Start Checking
-  </SubmitButton>
-  <p>Click this button when the Signup Portal is about to open.</p>
+
   <!-- Time Diffrence Section -->
   <section class="flex flex-col">
     <div class="flex items-center gap-3">
