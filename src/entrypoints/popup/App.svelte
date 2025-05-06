@@ -2,6 +2,7 @@
   import SubmitButton from "@/components/common/submit_button.svelte";
   import type { Submit_button_states } from "@/types";
 
+  import NumberFlow from "@number-flow/svelte";
   let response: string | undefined = $state();
   let time_diffrence: number | undefined = $state();
 
@@ -46,20 +47,6 @@
     <p class="text-center">Helps you SIgnup for the Free (Johny) Plan</p>
   </div>
   <div class="divider"></div>
-  <div class="flex items-center gap-3">
-    <div class="i-tabler:clock-hour-4-filled size-6"></div>
-    <p class="text-xl">Time Diffrence</p>
-  </div>
-  <div class="flex flex-col items-center mx-auto">
-    <span class="countdown font-mono text-5xl">
-      <span
-        style="--value:{Math.abs(time_diffrence || 0) % 100};"
-        aria-live="polite"
-        aria-label="59">59</span
-      >
-    </span>
-    ms
-  </div>
   <SubmitButton
     onclick={start_clicking}
     state={submit_state}
@@ -68,6 +55,16 @@
     Start Checking
   </SubmitButton>
   <p>Click this button when the Signup Portal is about to open.</p>
+  <!-- Time Diffrence Section -->
+  <section class="flex flex-col">
+    <div class="flex items-center gap-3">
+      <div class="i-tabler:clock-hour-4-filled size-6"></div>
+      <p class="text-xl">Time Diffrence</p>
+    </div>
+    <div class="flex gap-2 items-center mx-auto">
+      <NumberFlow value={time_diffrence || 0} class="text-3xl " />ms
+    </div>
+  </section>
   {#if response}
     <div role="alert" class="alert alert-info alert-soft">
       <span class="truncate">{response}</span>
