@@ -1,6 +1,5 @@
 <script lang="ts">
   import SubmitButton from "@/components/common/submit_button.svelte";
-  import EnableAutoclicker from "@/components/options/enable_autoclicker.svelte";
   import type { Submit_button_states } from "@/types";
   import NumberFlow from "@number-flow/svelte";
   let response: string | undefined = $state();
@@ -48,7 +47,6 @@
   </div>
   <div class="divider"></div>
 
-  <section class=" flex isolate"><EnableAutoclicker /></section>
   <!-- Time Diffrence Section -->
   <section class="flex flex-col">
     <div class="flex items-center gap-3">
