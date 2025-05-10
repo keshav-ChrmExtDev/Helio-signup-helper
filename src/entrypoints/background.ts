@@ -68,6 +68,16 @@ export default defineBackground(() => {
             await db.alarms.clear();
             await db.alarms.bulkPut(data);
           })();
+          browser.tabs.query(
+            { active: true, lastFocusedWindow: true },
+            ([tab]) => {
+              if (!tab.id) return;
+              browser.tabs.sendMessage(tab.id, {
+                action: "updateTimings",
+                data,
+              });
+            },
+          );
           break;
 
         default:
