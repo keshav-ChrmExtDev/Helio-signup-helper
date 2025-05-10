@@ -2,7 +2,7 @@
   "name": "helio_signup_helper",
   "description": "a bot to click the signup button for free accroun on helio host",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
