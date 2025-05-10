@@ -1,9 +1,6 @@
 <script lang="ts">
-  import SubmitButton from "@/components/common/submit_button.svelte";
-  import type { Submit_button_states } from "@/types";
   import type { user_prefrences } from "@/db";
   import NumberFlow from "@number-flow/svelte";
-  let response: string | undefined = $state();
   let time_diffrence: number | undefined = $state();
   let is_auto_click_enabled: boolean | undefined = $state();
 
@@ -13,21 +10,6 @@
     }
   });
 
-  async function start_clicking() {
-    submit_state = "waiting";
-    try {
-      while (true) {
-        const res = await fetch(
-          "https://heliohost.org/signup/reserve/?server=johnny",
-        );
-        if (res.url.includes("?error=full")) {
-          response = "Signups Not Open Yet";
-        } else {
-          submit_state = "success";
-          response = "Something Else Happened" + res.url;
-          console.log(res.url);
-          break;
-        }
   browser.runtime.sendMessage(
     { action: "getUserPreferences" },
     ({ data }: { data: user_prefrences[] }) => {
@@ -35,17 +17,6 @@
       if (prefs && prefs.length > 0) {
         is_auto_click_enabled = prefs[0].auto_click_on_set_time_enabled;
       }
-    } catch (e) {
-      submit_state = "error";
-      if (e instanceof Error) {
-        response = e.message;
-      }
-      console.error("Nothing Happened");
-    }
-  }
-
-  let submit_state: Submit_button_states = $state("idle");
-  $inspect(time_diffrence);
     },
   );
 </script>
@@ -109,9 +80,4 @@
       </li>
     </ul>
   </section>
-  {#if response}
-    <div role="alert" class="alert alert-info alert-soft">
-      <span class="truncate">{response}</span>
-    </div>
-  {/if}
 </main>
