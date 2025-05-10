@@ -2,6 +2,7 @@ export default defineBackground(() => {
   async function compareOsTimeWithInternetTime(): Promise<void> {
     const osTime = new Date();
     let internetTime: Date | null = null;
+import { db, user_prefrences } from "@/db";
 
     try {
       const res = await fetch("https://www.google.com/generate_204", {
@@ -32,4 +33,12 @@ export default defineBackground(() => {
       await compareOsTimeWithInternetTime();
     }, 1000);
   })();
+  browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "getUserPreferences") {
+      db.user_prefrences.toArray().then((prefs: user_prefrences[]) => {
+        sendResponse({ data: prefs });
+      });
+      return true; // <- keep the message channel open for async response
+    }
+  });
 });

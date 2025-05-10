@@ -1,9 +1,11 @@
 <script lang="ts">
   import SubmitButton from "@/components/common/submit_button.svelte";
   import type { Submit_button_states } from "@/types";
+  import type { user_prefrences } from "@/db";
   import NumberFlow from "@number-flow/svelte";
   let response: string | undefined = $state();
   let time_diffrence: number | undefined = $state();
+  let is_auto_click_enabled: boolean | undefined = $state();
 
   browser.runtime.onMessage.addListener((message) => {
     if (message.type === "setDifference") {
@@ -26,6 +28,12 @@
           console.log(res.url);
           break;
         }
+  browser.runtime.sendMessage(
+    { action: "getUserPreferences" },
+    ({ data }: { data: user_prefrences[] }) => {
+      const prefs = data;
+      if (prefs && prefs.length > 0) {
+        is_auto_click_enabled = prefs[0].auto_click_on_set_time_enabled;
       }
     } catch (e) {
       submit_state = "error";
@@ -38,6 +46,8 @@
 
   let submit_state: Submit_button_states = $state("idle");
   $inspect(time_diffrence);
+    },
+  );
 </script>
 
 <main class="flex flex-col p-4">
@@ -68,7 +78,7 @@
       <li class="list-row flex justify-between">
         <p class="text-lg">Autoclicker enabled?</p>
         <label class="toggle text-base-content toggle-xl">
-          <input type="checkbox" />
+          <input type="checkbox" bind:checked={is_auto_click_enabled} />
           <div
             class="i-tabler:x size-6 bg-black z-6"
             aria-label="enabled"
