@@ -13,7 +13,7 @@ const db = new Dexie("helio_host_db") as Dexie & {
   alarms: EntityTable<alarm, "id">;
 };
 
-db.version(1).stores({
+db.version(2).stores({
   user_prefrences: "++id, auto_click_on_set_time_enabled ",
   alarms: "++id, time",
 });
