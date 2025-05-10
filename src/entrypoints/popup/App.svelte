@@ -106,46 +106,56 @@
           ></div>
         </label>
       </li>
-      <li class="list-row flex-col flex">
-        <div class="flex justify-between items-center">
-          <p>Click Schedules</p>
-          <button
-            class="btn btn-sm btn-soft"
-            aria-label="Reset Click Schedules"
-            onclick={reset_click_schedules}
-            ><div class="i-tabler:refresh size-5"></div></button
+      <li class="flex-col flex">
+        <div class="collapse collapse-arrow bg-base-100 border-base-300 border">
+          <input type="checkbox" />
+          <div
+            class="collapse-title font-semibold flex justify-between items-center"
           >
+            <p>Click Schedules</p>
+            <button
+              class="btn btn-sm btn-soft"
+              aria-label="Reset Click Schedules"
+              onclick={reset_click_schedules}
+              ><div class="i-tabler:refresh size-5"></div></button
+            >
+          </div>
+          <div class="collapse-content text-sm">
+            <ul class="list bg-base-100 rounded-box shadow-md overflow-y-auto">
+              {#each click_schedules_mutable as click_schedule (click_schedule.id)}
+                <li
+                  transition:fly={{ y: +10, easing: backOut }}
+                  class="list-row"
+                >
+                  <input
+                    type="time"
+                    class="input list-col-grow"
+                    bind:value={click_schedule.time}
+                  />
+                  <button
+                    class="btn btn-sm h-full"
+                    aria-label="Remove Timing"
+                    onclick={() => {
+                      remove_row_by_id(click_schedule.id);
+                    }}
+                  >
+                    <div class="i-tabler:trash-filled color-error size-5"></div>
+                  </button>
+                </li>
+              {:else}
+                <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">
+                  Nothing to Show
+                </li>
+              {/each}
+              <li class="list-row">
+                <button class="btn list-col-grow" onclick={add_new_timing}>
+                  Add
+                  <div class="i-tabler:circle-plus-filled size-5"></div>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ul class="list bg-base-100 rounded-box shadow-md overflow-y-auto">
-          {#each click_schedules_mutable as click_schedule (click_schedule.id)}
-            <li transition:fly={{ y: +10, easing: backOut }} class="list-row">
-              <input
-                type="time"
-                class="input list-col-grow"
-                bind:value={click_schedule.time}
-              />
-              <button
-                class="btn btn-sm h-full"
-                aria-label="Remove Timing"
-                onclick={() => {
-                  remove_row_by_id(click_schedule.id);
-                }}
-              >
-                <div class="i-tabler:trash-filled color-error size-5"></div>
-              </button>
-            </li>
-          {:else}
-            <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">
-              Nothing to Show
-            </li>
-          {/each}
-          <li class="list-row">
-            <button class="btn list-col-grow" onclick={add_new_timing}>
-              Add
-              <div class="i-tabler:circle-plus-filled size-5"></div>
-            </button>
-          </li>
-        </ul>
       </li>
     </ul>
   </section>
