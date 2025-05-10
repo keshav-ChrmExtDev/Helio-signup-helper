@@ -78,7 +78,7 @@
         ? 'Very likely to Miss the Opening time '
         : Math.abs(time_diffrence || 0) > 100
           ? 'likely to miss the opening time'
-          : ''}
+          : 'Acceptable Diffrence'}
       "
     >
       <NumberFlow value={time_diffrence || 0} class="text-3xl " />ms
