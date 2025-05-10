@@ -1,4 +1,4 @@
-import { db, user_prefrences } from "@/db";
+import { alarm, db, user_prefrences } from "@/db";
 
 async function compareOsTimeWithInternetTime(): Promise<void> {
   const osTime = new Date();
@@ -27,7 +27,6 @@ async function compareOsTimeWithInternetTime(): Promise<void> {
     browser.runtime.sendMessage({ type: "setDifference", diffMs });
   }
 }
-
 const default_timings = [
   { id: 1, time: "05:30" },
   { id: 2, time: "17:30" },
@@ -42,12 +41,37 @@ export default defineBackground(() => {
       await compareOsTimeWithInternetTime();
     }, 1000);
   })();
-  browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "getUserPreferences") {
-      db.user_prefrences.toArray().then((prefs: user_prefrences[]) => {
-        sendResponse({ data: prefs });
-      });
-      return true; // <- keep the message channel open for async response
-    }
-  });
+  browser.runtime.onMessage.addListener(
+    (
+      { action, data }: { action: string; data?: any },
+      sender,
+      sendResponse,
+    ) => {
+      switch (action) {
+        case "getUserPreferences":
+          db.user_prefrences.toArray().then((prefs: user_prefrences[]) => {
+            sendResponse({ data: prefs });
+          });
+          return true; // <- keep the message channel open for async response
+          break;
+        case "getAlertTimings":
+          db.alarms.toArray().then((alarms: alarm[]) => {
+            sendResponse({
+              data: { db_timings: alarms, default_timings },
+            });
+          });
+          return true; // <- keep the message channel open for async response
+          break;
+        case "updateTimings":
+          (async () => {
+            await db.alarms.clear();
+            await db.alarms.bulkPut(data);
+          })();
+          break;
+
+        default:
+          break;
+      }
+    },
+  );
 });

@@ -1,8 +1,12 @@
 <script lang="ts">
-  import type { user_prefrences } from "@/db";
+  import type { alarm, user_prefrences } from "@/db";
   import NumberFlow from "@number-flow/svelte";
+  import { backOut } from "svelte/easing";
+  import { fly } from "svelte/transition";
   let time_diffrence: number | undefined = $state();
   let is_auto_click_enabled: boolean | undefined = $state();
+  let click_schedules_initial: alarm[] = $state([]);
+  let click_schedules_mutable: alarm[] = $state([]);
 
   browser.runtime.onMessage.addListener((message) => {
     if (message.type === "setDifference") {
@@ -19,6 +23,30 @@
       }
     },
   );
+  browser.runtime.sendMessage(
+    { action: "getAlertTimings" },
+    ({ data }: { data: { db_timings: alarm[]; default_timings: alarm[] } }) => {
+      click_schedules_initial = data.default_timings;
+      click_schedules_mutable = data.db_timings;
+    },
+  );
+
+  function add_new_timing() {
+    const last = click_schedules_mutable[click_schedules_mutable.length - 1];
+    click_schedules_mutable.push({ id: last.id + 1, time: "" });
+  }
+  function remove_row_by_id(id: number) {
+    click_schedules_mutable = click_schedules_mutable.filter((v) => v.id != id);
+  }
+  function reset_click_schedules() {
+    click_schedules_mutable = click_schedules_initial;
+  }
+  $effect(() => {
+    browser.runtime.sendMessage({
+      action: "updateTimings",
+      data: click_schedules_mutable,
+    });
+  });
 </script>
 
 <main class="flex flex-col p-4">
@@ -77,6 +105,47 @@
             aria-label="enabled"
           ></div>
         </label>
+      </li>
+      <li class="list-row flex-col flex">
+        <div class="flex justify-between items-center">
+          <p>Click Schedules</p>
+          <button
+            class="btn btn-sm btn-soft"
+            aria-label="Reset Click Schedules"
+            onclick={reset_click_schedules}
+            ><div class="i-tabler:refresh size-5"></div></button
+          >
+        </div>
+        <ul class="list bg-base-100 rounded-box shadow-md overflow-y-auto">
+          {#each click_schedules_mutable as click_schedule (click_schedule.id)}
+            <li transition:fly={{ y: +10, easing: backOut }} class="list-row">
+              <input
+                type="time"
+                class="input list-col-grow"
+                bind:value={click_schedule.time}
+              />
+              <button
+                class="btn btn-sm h-full"
+                aria-label="Remove Timing"
+                onclick={() => {
+                  remove_row_by_id(click_schedule.id);
+                }}
+              >
+                <div class="i-tabler:trash-filled color-error size-5"></div>
+              </button>
+            </li>
+          {:else}
+            <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">
+              Nothing to Show
+            </li>
+          {/each}
+          <li class="list-row">
+            <button class="btn list-col-grow" onclick={add_new_timing}>
+              Add
+              <div class="i-tabler:circle-plus-filled size-5"></div>
+            </button>
+          </li>
+        </ul>
       </li>
     </ul>
   </section>
