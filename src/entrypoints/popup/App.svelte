@@ -58,11 +58,14 @@
   <div class="divider"></div>
 
   <!-- Time Diffrence Section -->
-  <section class="flex flex-col">
+  <section class="flex gap-2 flex-col">
     <div class="flex items-center gap-3">
       <div class="i-tabler:clock-hour-4-filled size-6"></div>
       <p class="text-xl">Time Diffrence</p>
     </div>
+    <p class="color-white/80">
+      The Time diffrence of your OS Time & Internet Time that Helio Host uses
+    </p>
     <div
       class="flex gap-2 items-center mx-auto tooltip
       {Math.abs(time_diffrence || 0) > 200
