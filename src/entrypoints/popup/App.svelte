@@ -60,7 +60,7 @@
   <section class="flex gap-2 flex-col">
     <div class="flex items-center gap-3">
       <div class="i-tabler:clock-hour-4-filled size-6"></div>
-      <p class="text-xl">Time Diffrence</p>
+      <p class="text-xl">Time Difference</p>
     </div>
     <p class="color-white/80">
       The Time diffrence of your OS Time & Internet Time that Helio Host uses
