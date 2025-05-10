@@ -92,8 +92,8 @@
       <p class="text-xl">Options</p>
     </div>
     <ul class="list">
-      <li class="list-row flex justify-between">
-        <p class="text-lg">Autoclicker enabled?</p>
+      <li class="list-row flex justify-between items-center">
+        <p class="">Autoclicker enabled?</p>
         <label class="toggle text-base-content toggle-xl">
           <input type="checkbox" bind:checked={is_auto_click_enabled} />
           <div
