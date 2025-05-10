@@ -63,7 +63,22 @@
       <div class="i-tabler:clock-hour-4-filled size-6"></div>
       <p class="text-xl">Time Diffrence</p>
     </div>
-    <div class="flex gap-2 items-center mx-auto">
+    <div
+      class="flex gap-2 items-center mx-auto tooltip
+      {Math.abs(time_diffrence || 0) > 200
+        ? 'color-error tooltip-error'
+        : Math.abs(time_diffrence || 0) > 100
+          ? 'color-warning tooltip-warning'
+          : ''}
+            "
+      data-tip="
+        {Math.abs(time_diffrence || 0) > 200
+        ? 'Very likely to Miss the Opening time '
+        : Math.abs(time_diffrence || 0) > 100
+          ? 'likely to miss the opening time'
+          : ''}
+      "
+    >
       <NumberFlow value={time_diffrence || 0} class="text-3xl " />ms
     </div>
   </section>
