@@ -114,7 +114,7 @@
           >
             <p>Click Schedules</p>
             <button
-              class="btn btn-sm btn-soft"
+              class="btn btn-sm btn-soft z-99"
               aria-label="Reset Click Schedules"
               onclick={reset_click_schedules}
               ><div class="i-tabler:refresh size-5"></div></button
