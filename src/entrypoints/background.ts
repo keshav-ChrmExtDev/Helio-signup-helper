@@ -1,5 +1,10 @@
 import { alarm, db, user_prefrences } from "@/db";
 
+const default_timings = [
+  { id: 1, time: "05:30" },
+  { id: 2, time: "17:30" },
+];
+
 async function compareOsTimeWithInternetTime(): Promise<void> {
   const osTime = new Date();
   let internetTime: Date | null = null;
@@ -27,10 +32,6 @@ async function compareOsTimeWithInternetTime(): Promise<void> {
     browser.runtime.sendMessage({ type: "setDifference", diffMs });
   }
 }
-const default_timings = [
-  { id: 1, time: "05:30" },
-  { id: 2, time: "17:30" },
-];
 db.on("populate", () => {
   db.user_prefrences.add({ auto_click_on_set_time_enabled: true });
   db.alarms.bulkAdd(default_timings);
