@@ -7,6 +7,7 @@ function scheduleTimings(
 ): void {
   timeouts.forEach((id) => clearTimeout(id));
   for (const timing of timings) {
+    if (!timing.time) return;
     const [h, m] = timing.time.split(":").map(Number);
     const now = new Date();
     const target = new Date(now);
