@@ -28,6 +28,14 @@ async function compareOsTimeWithInternetTime(): Promise<void> {
   }
 }
 
+const default_timings = [
+  { id: 1, time: "05:30" },
+  { id: 2, time: "17:30" },
+];
+db.on("populate", () => {
+  db.user_prefrences.add({ auto_click_on_set_time_enabled: true });
+  db.alarms.bulkAdd(default_timings);
+});
 export default defineBackground(() => {
   (async () => {
     setInterval(async () => {

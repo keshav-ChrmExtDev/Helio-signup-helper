@@ -18,12 +18,5 @@ db.version(2).stores({
   alarms: "++id, time",
 });
 
-db.user_prefrences.toArray().then((data) => {
-  if (data.length === 0) {
-    db.user_prefrences.add({ auto_click_on_set_time_enabled: true });
-  }
-});
-
-export type { user_prefrences };
 export type { user_prefrences, alarm };
 export { db };
