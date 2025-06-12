@@ -39,5 +39,5 @@ jobs:
             .output/*-chrome.zip
             .output/*-firefox.zip
             .output/*-sources.zip
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
